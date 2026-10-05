@@ -1,0 +1,126 @@
+[
+ {
+  "date": "2026-10-03",
+  "label": "Inference on every processing unit (round 4 and the VENTUNO Q GPU image)",
+  "summary": "inference test added; VENTUNO Q GPU via RustiCL",
+  "targets": {
+   "vq": {
+    "pass": 525,
+    "fail": 10,
+    "skip": 30,
+    "jobs": [
+     468560,
+     468703
+    ],
+    "latency": {
+     "cpu-qnn": 29.6495,
+     "npu0-qnn-htp": 9.994,
+     "cpu-tflite": 6.496,
+     "gpu-tflite-gpu": 48.773
+    }
+   },
+   "lemans": {
+    "pass": 315,
+    "fail": 16,
+    "skip": 16,
+    "jobs": [
+     468562
+    ],
+    "latency": {
+     "cpu-qnn": 26.455,
+     "npu0-qnn-htp": 1.863,
+     "npu1-qnn-htp": 1.964
+    }
+   },
+   "rb3g2": {
+    "pass": 255,
+    "fail": 11,
+    "skip": 18,
+    "jobs": [
+     468564
+    ],
+    "latency": {
+     "cpu-qnn": 25.297,
+     "npu0-qnn-htp": 0.7
+    }
+   },
+   "unoq": {
+    "pass": 191,
+    "fail": 12,
+    "skip": 11,
+    "jobs": [
+     468713
+    ],
+    "latency": {
+     "cpu-tflite": 33.055
+    }
+   }
+  }
+ },
+ {
+  "date": "2026-10-04",
+  "label": "F19 fastrpc poll, Kodiak/Lemans GPU, UNO Q GPU fixes, each on its own branch",
+  "summary": "separate fix runs before the integration",
+  "targets": {
+   "vq": {
+    "pass": 536,
+    "fail": 12,
+    "skip": 30,
+    "jobs": [
+     469632,
+     469686
+    ],
+    "latency": {
+     "cpu-qnn": 29.652,
+     "npu0-qnn-htp": 7.8185,
+     "cpu-tflite": 6.779,
+     "gpu-tflite-gpu": 38.501999999999995
+    }
+   },
+   "lemans": {
+    "pass": 658,
+    "fail": 34,
+    "skip": 32,
+    "jobs": [
+     469648,
+     469652
+    ],
+    "latency": {
+     "cpu-qnn": 31.72,
+     "npu0-qnn-htp": 1.854,
+     "npu1-qnn-htp": 1.8610000000000002,
+     "cpu-tflite": 11.561,
+     "gpu-tflite-gpu": 17.651
+    }
+   },
+   "rb3g2": {
+    "pass": 539,
+    "fail": 23,
+    "skip": 34,
+    "jobs": [
+     469622,
+     469628
+    ],
+    "latency": {
+     "cpu-qnn": 24.783,
+     "npu0-qnn-htp": 0.6935,
+     "cpu-tflite": 9.48,
+     "gpu-tflite-gpu": 35.311499999999995
+    }
+   },
+   "unoq": {
+    "pass": 396,
+    "fail": 10,
+    "skip": 22,
+    "jobs": [
+     469688,
+     469689
+    ],
+    "latency": {
+     "cpu-tflite": 33.604,
+     "gpu-tflite-gpu": 327.84950000000003
+    }
+   }
+  }
+ }
+]
