@@ -1,0 +1,1040 @@
+{
+  "title": "OSS firmware update 2026-10-06",
+  "date": "2026-10-06",
+  "report_type": "followup",
+  "targets": [
+    {
+      "key": "vq",
+      "name": "Arduino VENTUNO Q",
+      "soc": "QCS8275 (Monaco)"
+    },
+    {
+      "key": "unoq",
+      "name": "Arduino UNO Q",
+      "soc": "QRB2210 (Agatti)"
+    },
+    {
+      "key": "rb3g2",
+      "name": "RB3 Gen 2",
+      "soc": "QCS6490 (Kodiak)"
+    },
+    {
+      "key": "lemans",
+      "name": "IQ-9075 EVK",
+      "soc": "QCS9075 (Lemans)"
+    }
+  ],
+  "jobs": [],
+  "baselines": [],
+  "notes": {
+    "byline": "Results from October 5 and 6, 2026. Public LAVA evidence; focused follow-up to the October 4 integration run.",
+    "index_summary": "SystemReady fixes, UNO Q CPU_ON fix, synchronous NPU latency and remoteproc restart validation",
+    "footer": "Arm suite verdicts and LAVA case counts are different measures. No overall Arm compliance is claimed. <a href=\"results.json\">Download this report data</a>.",
+    "inf1": {
+      "commit": "a5c05a1558377835e2025746f995c253179a300e",
+      "base": "33802ad7126f068bedd1a7e2eb265369b3076c42",
+      "method": "INF-1 follow-up, 2026-10-05: two original/updated pairs on the same boot per board, using the current integration images. Only the HTP command adds --synchronous. QNN CPU and TensorFlow Lite CPU/GPU commands are unchanged. MobileNetV2, seven images, five warm-ups and 51 measured inferences per run. Bars average the two run means; whiskers average the per-run p50 and p90, not pooled percentiles. Original VENTUNO Q NPU values include async queue wait. Updated NPU values are synchronous per-inference NETRUN times including host/runtime overhead, not accelerator-only times or throughput.",
+      "ordering": "NPU ordering, fastest first: original test, RB3 Gen 2 < Lemans EVK (IQ-9075) < VENTUNO Q; synchronous test, VENTUNO Q < RB3 Gen 2 < Lemans EVK (IQ-9075). The change corrects the latency measurement; these jobs reuse the same firmware, kernel, runtimes and model.",
+      "limitations": "These are two repeats on one boot per board, not a survey of device or boot variability. CPU/GPU timings differ despite unchanged commands; these pairs do not isolate clock, thermal or preceding-workload effects. The first VENTUNO Q attempt (471041) hit the existing F20 GPU boot failure: HFI_H2F_MSG_PREPARE_SLUMBER timed out and the first original-test GPU correctness checks failed. It remains in the evidence; the VENTUNO Q table uses the complete repeat with passing correctness checks. No image was rebuilt. Test-definitions commit a5c05a15 is local and has not been published.",
+      "targets": {
+        "rb3g2": {
+          "runs": [
+            {
+              "mode": "old",
+              "suite": "inference-old-1",
+              "id": 471042,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471042",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 24.976,
+                  "p50": 24.946,
+                  "p90": 25.132
+                },
+                "cpu-tflite": {
+                  "mean": 9.418,
+                  "p50": 9.395,
+                  "p90": 9.515
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 26.767,
+                  "p50": 27.055,
+                  "p90": 27.395
+                },
+                "npu0-qnn-htp": {
+                  "mean": 0.688,
+                  "p50": 0.676,
+                  "p90": 0.706
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 29
+              }
+            },
+            {
+              "mode": "new",
+              "suite": "inference-new-1",
+              "id": 471042,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471042",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 25.107,
+                  "p50": 25.097,
+                  "p90": 25.285
+                },
+                "cpu-tflite": {
+                  "mean": 9.474,
+                  "p50": 9.466,
+                  "p90": 9.53
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 25.02,
+                  "p50": 24.578,
+                  "p90": 26.729
+                },
+                "npu0-qnn-htp": {
+                  "mean": 0.686,
+                  "p50": 0.673,
+                  "p90": 0.704
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 29
+              }
+            },
+            {
+              "mode": "old",
+              "suite": "inference-old-2",
+              "id": 471042,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471042",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 25.269,
+                  "p50": 25.27,
+                  "p90": 25.428
+                },
+                "cpu-tflite": {
+                  "mean": 9.471,
+                  "p50": 9.436,
+                  "p90": 9.588
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 26.925,
+                  "p50": 27.245,
+                  "p90": 27.682
+                },
+                "npu0-qnn-htp": {
+                  "mean": 0.694,
+                  "p50": 0.677,
+                  "p90": 0.711
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 29
+              }
+            },
+            {
+              "mode": "new",
+              "suite": "inference-new-2",
+              "id": 471042,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471042",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 24.949,
+                  "p50": 25.139,
+                  "p90": 25.302
+                },
+                "cpu-tflite": {
+                  "mean": 9.467,
+                  "p50": 9.441,
+                  "p90": 9.541
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 24.913,
+                  "p50": 24.413,
+                  "p90": 26.494
+                },
+                "npu0-qnn-htp": {
+                  "mean": 0.685,
+                  "p50": 0.674,
+                  "p90": 0.701
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 29
+              }
+            }
+          ],
+          "note": "Job 471042: original 33802ad7 and updated a5c05a15, alternated twice on one boot. The original backend already falls back to synchronous execution; the explicit option keeps the same latency semantics.",
+          "validation": "7/7 firmware and live-image fingerprint checks pass; both test-script hashes match. All four normal inference suites pass correctness checks. Negative controls, wrong-class: 4 expected failures, gpu-down: 7 expected failures, htp-down: 9 expected failures; no unexpected failures. Poweroff confirmed in the job log.",
+          "negative": {
+            "wrong-class": {
+              "valid": true,
+              "expected_failures": [
+                "cpu-qnn-top1",
+                "cpu-tflite-top1",
+                "gpu-tflite-gpu-top1",
+                "npu0-qnn-htp-top1"
+              ],
+              "actual_failures": [
+                "cpu-qnn-top1",
+                "cpu-tflite-top1",
+                "gpu-tflite-gpu-top1",
+                "npu0-qnn-htp-top1"
+              ],
+              "counts": {
+                "pass": 25,
+                "fail": 4
+              }
+            },
+            "gpu-down": {
+              "valid": true,
+              "expected_failures": [
+                "gpu-tflite-gpu-latency",
+                "gpu-tflite-gpu-latency-p50",
+                "gpu-tflite-gpu-latency-p90",
+                "gpu-tflite-gpu-ready",
+                "gpu-tflite-gpu-run",
+                "gpu-tflite-gpu-top1",
+                "gpu-tflite-gpu-vs-cpu"
+              ],
+              "actual_failures": [
+                "gpu-tflite-gpu-latency",
+                "gpu-tflite-gpu-latency-p50",
+                "gpu-tflite-gpu-latency-p90",
+                "gpu-tflite-gpu-ready",
+                "gpu-tflite-gpu-run",
+                "gpu-tflite-gpu-top1",
+                "gpu-tflite-gpu-vs-cpu"
+              ],
+              "counts": {
+                "pass": 22,
+                "fail": 7
+              }
+            },
+            "htp-down": {
+              "valid": true,
+              "expected_failures": [
+                "npu0-qnn-htp-latency",
+                "npu0-qnn-htp-latency-p50",
+                "npu0-qnn-htp-latency-p90",
+                "npu0-qnn-htp-ready",
+                "npu0-qnn-htp-run",
+                "npu0-qnn-htp-speedup",
+                "npu0-qnn-htp-top1",
+                "npu0-qnn-htp-vs-cpu",
+                "npu0-qnn-htp-vs-host"
+              ],
+              "actual_failures": [
+                "npu0-qnn-htp-latency",
+                "npu0-qnn-htp-latency-p50",
+                "npu0-qnn-htp-latency-p90",
+                "npu0-qnn-htp-ready",
+                "npu0-qnn-htp-run",
+                "npu0-qnn-htp-speedup",
+                "npu0-qnn-htp-top1",
+                "npu0-qnn-htp-vs-cpu",
+                "npu0-qnn-htp-vs-host"
+              ],
+              "counts": {
+                "pass": 20,
+                "fail": 9
+              }
+            }
+          },
+          "fingerprints": {
+            "boot-fingerprint": {
+              "fingerprint-linux": "pass",
+              "fingerprint-rootfs": "pass",
+              "fingerprint-firmware-dmi": "pass"
+            },
+            "firmware-fingerprint-cold": {
+              "bl2": "pass",
+              "bl31": "pass",
+              "op_tee_version": "pass",
+              "u_boot": "pass"
+            }
+          }
+        },
+        "lemans": {
+          "runs": [
+            {
+              "mode": "old",
+              "suite": "inference-old-1",
+              "id": 471043,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471043",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 35.931,
+                  "p50": 36.673,
+                  "p90": 45.269
+                },
+                "cpu-tflite": {
+                  "mean": 11.618,
+                  "p50": 11.582,
+                  "p90": 11.6
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 10.854,
+                  "p50": 10.846,
+                  "p90": 10.91
+                },
+                "npu0-qnn-htp": {
+                  "mean": 1.654,
+                  "p50": 1.653,
+                  "p90": 1.67
+                },
+                "npu1-qnn-htp": {
+                  "mean": 1.651,
+                  "p50": 1.649,
+                  "p90": 1.667
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 38
+              }
+            },
+            {
+              "mode": "new",
+              "suite": "inference-new-1",
+              "id": 471043,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471043",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 26.259,
+                  "p50": 26.273,
+                  "p90": 26.392
+                },
+                "cpu-tflite": {
+                  "mean": 11.637,
+                  "p50": 11.572,
+                  "p90": 11.603
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 11.402,
+                  "p50": 11.396,
+                  "p90": 11.461
+                },
+                "npu0-qnn-htp": {
+                  "mean": 1.735,
+                  "p50": 1.73,
+                  "p90": 1.759
+                },
+                "npu1-qnn-htp": {
+                  "mean": 1.652,
+                  "p50": 1.649,
+                  "p90": 1.669
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 38
+              }
+            },
+            {
+              "mode": "old",
+              "suite": "inference-old-2",
+              "id": 471043,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471043",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 27.666,
+                  "p50": 26.42,
+                  "p90": 27.053
+                },
+                "cpu-tflite": {
+                  "mean": 11.574,
+                  "p50": 11.571,
+                  "p90": 11.59
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 11.347,
+                  "p50": 11.336,
+                  "p90": 11.413
+                },
+                "npu0-qnn-htp": {
+                  "mean": 1.732,
+                  "p50": 1.73,
+                  "p90": 1.743
+                },
+                "npu1-qnn-htp": {
+                  "mean": 1.733,
+                  "p50": 1.731,
+                  "p90": 1.747
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 38
+              }
+            },
+            {
+              "mode": "new",
+              "suite": "inference-new-2",
+              "id": 471043,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471043",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 26.809,
+                  "p50": 26.367,
+                  "p90": 26.594
+                },
+                "cpu-tflite": {
+                  "mean": 11.595,
+                  "p50": 11.593,
+                  "p90": 11.61
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 11.628,
+                  "p50": 11.621,
+                  "p90": 11.741
+                },
+                "npu0-qnn-htp": {
+                  "mean": 1.736,
+                  "p50": 1.736,
+                  "p90": 1.752
+                },
+                "npu1-qnn-htp": {
+                  "mean": 1.731,
+                  "p50": 1.728,
+                  "p90": 1.745
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 38
+              }
+            }
+          ],
+          "note": "Job 471043: original 33802ad7 and updated a5c05a15, alternated twice on one boot. The original backend already falls back to synchronous execution; the explicit option keeps the same latency semantics.",
+          "validation": "7/7 firmware and live-image fingerprint checks pass; both test-script hashes match. All four normal inference suites pass correctness checks. Negative controls, wrong-class: 5 expected failures, gpu-down: 7 expected failures, htp-down: 18 expected failures; no unexpected failures. Poweroff confirmed in the job log.",
+          "negative": {
+            "wrong-class": {
+              "valid": true,
+              "expected_failures": [
+                "cpu-qnn-top1",
+                "cpu-tflite-top1",
+                "gpu-tflite-gpu-top1",
+                "npu0-qnn-htp-top1",
+                "npu1-qnn-htp-top1"
+              ],
+              "actual_failures": [
+                "cpu-qnn-top1",
+                "cpu-tflite-top1",
+                "gpu-tflite-gpu-top1",
+                "npu0-qnn-htp-top1",
+                "npu1-qnn-htp-top1"
+              ],
+              "counts": {
+                "pass": 33,
+                "fail": 5
+              }
+            },
+            "gpu-down": {
+              "valid": true,
+              "expected_failures": [
+                "gpu-tflite-gpu-latency",
+                "gpu-tflite-gpu-latency-p50",
+                "gpu-tflite-gpu-latency-p90",
+                "gpu-tflite-gpu-ready",
+                "gpu-tflite-gpu-run",
+                "gpu-tflite-gpu-top1",
+                "gpu-tflite-gpu-vs-cpu"
+              ],
+              "actual_failures": [
+                "gpu-tflite-gpu-latency",
+                "gpu-tflite-gpu-latency-p50",
+                "gpu-tflite-gpu-latency-p90",
+                "gpu-tflite-gpu-ready",
+                "gpu-tflite-gpu-run",
+                "gpu-tflite-gpu-top1",
+                "gpu-tflite-gpu-vs-cpu"
+              ],
+              "counts": {
+                "pass": 31,
+                "fail": 7
+              }
+            },
+            "htp-down": {
+              "valid": true,
+              "expected_failures": [
+                "npu0-qnn-htp-latency",
+                "npu0-qnn-htp-latency-p50",
+                "npu0-qnn-htp-latency-p90",
+                "npu0-qnn-htp-ready",
+                "npu0-qnn-htp-run",
+                "npu0-qnn-htp-speedup",
+                "npu0-qnn-htp-top1",
+                "npu0-qnn-htp-vs-cpu",
+                "npu0-qnn-htp-vs-host",
+                "npu1-qnn-htp-latency",
+                "npu1-qnn-htp-latency-p50",
+                "npu1-qnn-htp-latency-p90",
+                "npu1-qnn-htp-ready",
+                "npu1-qnn-htp-run",
+                "npu1-qnn-htp-speedup",
+                "npu1-qnn-htp-top1",
+                "npu1-qnn-htp-vs-cpu",
+                "npu1-qnn-htp-vs-host"
+              ],
+              "actual_failures": [
+                "npu0-qnn-htp-latency",
+                "npu0-qnn-htp-latency-p50",
+                "npu0-qnn-htp-latency-p90",
+                "npu0-qnn-htp-ready",
+                "npu0-qnn-htp-run",
+                "npu0-qnn-htp-speedup",
+                "npu0-qnn-htp-top1",
+                "npu0-qnn-htp-vs-cpu",
+                "npu0-qnn-htp-vs-host",
+                "npu1-qnn-htp-latency",
+                "npu1-qnn-htp-latency-p50",
+                "npu1-qnn-htp-latency-p90",
+                "npu1-qnn-htp-ready",
+                "npu1-qnn-htp-run",
+                "npu1-qnn-htp-speedup",
+                "npu1-qnn-htp-top1",
+                "npu1-qnn-htp-vs-cpu",
+                "npu1-qnn-htp-vs-host"
+              ],
+              "counts": {
+                "fail": 18,
+                "pass": 20
+              }
+            }
+          },
+          "fingerprints": {
+            "boot-fingerprint": {
+              "fingerprint-linux": "pass",
+              "fingerprint-rootfs": "pass",
+              "fingerprint-firmware-dmi": "pass"
+            },
+            "firmware-fingerprint-cold": {
+              "u_boot_spl": "pass",
+              "bl31": "pass",
+              "op_tee_version": "pass",
+              "u_boot": "pass"
+            }
+          }
+        },
+        "unoq": {
+          "runs": [
+            {
+              "mode": "old",
+              "suite": "inference-old-1",
+              "id": 471044,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471044",
+              "measurements": {
+                "cpu-tflite": {
+                  "mean": 33.661,
+                  "p50": 33.606,
+                  "p90": 33.709
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 326.879,
+                  "p50": 326.862,
+                  "p90": 326.933
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 14,
+                "skip": 2
+              }
+            },
+            {
+              "mode": "new",
+              "suite": "inference-new-1",
+              "id": 471044,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471044",
+              "measurements": {
+                "cpu-tflite": {
+                  "mean": 33.74,
+                  "p50": 33.537,
+                  "p90": 33.632
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 329.962,
+                  "p50": 329.933,
+                  "p90": 330.048
+                }
+              },
+              "failures": [],
+              "counts": {
+                "skip": 2,
+                "pass": 14
+              }
+            },
+            {
+              "mode": "old",
+              "suite": "inference-old-2",
+              "id": 471044,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471044",
+              "measurements": {
+                "cpu-tflite": {
+                  "mean": 33.658,
+                  "p50": 33.656,
+                  "p90": 33.702
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 334.284,
+                  "p50": 334.267,
+                  "p90": 334.361
+                }
+              },
+              "failures": [],
+              "counts": {
+                "skip": 2,
+                "pass": 14
+              }
+            },
+            {
+              "mode": "new",
+              "suite": "inference-new-2",
+              "id": 471044,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471044",
+              "measurements": {
+                "cpu-tflite": {
+                  "mean": 33.503,
+                  "p50": 33.508,
+                  "p90": 33.572
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 331.772,
+                  "p50": 331.764,
+                  "p90": 331.823
+                }
+              },
+              "failures": [],
+              "counts": {
+                "skip": 2,
+                "pass": 14
+              }
+            }
+          ],
+          "note": "Job 471044: original 33802ad7 and updated a5c05a15, alternated twice on one boot. NPU absent (no Hexagon NSP); QNN CPU absent because QAIRT 2.42 does not support QRB2210. CPU uses TFLite XNNPACK.",
+          "validation": "7/7 firmware and live-image fingerprint checks pass; both test-script hashes match. All four normal inference suites pass correctness checks. Negative controls, wrong-class: 2 expected failures, gpu-down: 7 expected failures; no unexpected failures. Poweroff confirmed in the job log.",
+          "negative": {
+            "wrong-class": {
+              "valid": true,
+              "expected_failures": [
+                "cpu-tflite-top1",
+                "gpu-tflite-gpu-top1"
+              ],
+              "actual_failures": [
+                "cpu-tflite-top1",
+                "gpu-tflite-gpu-top1"
+              ],
+              "counts": {
+                "skip": 2,
+                "pass": 12,
+                "fail": 2
+              }
+            },
+            "gpu-down": {
+              "valid": true,
+              "expected_failures": [
+                "gpu-tflite-gpu-latency",
+                "gpu-tflite-gpu-latency-p50",
+                "gpu-tflite-gpu-latency-p90",
+                "gpu-tflite-gpu-ready",
+                "gpu-tflite-gpu-run",
+                "gpu-tflite-gpu-top1",
+                "gpu-tflite-gpu-vs-cpu"
+              ],
+              "actual_failures": [
+                "gpu-tflite-gpu-latency",
+                "gpu-tflite-gpu-latency-p50",
+                "gpu-tflite-gpu-latency-p90",
+                "gpu-tflite-gpu-ready",
+                "gpu-tflite-gpu-run",
+                "gpu-tflite-gpu-top1",
+                "gpu-tflite-gpu-vs-cpu"
+              ],
+              "counts": {
+                "skip": 2,
+                "pass": 7,
+                "fail": 7
+              }
+            }
+          },
+          "fingerprints": {
+            "boot-fingerprint": {
+              "fingerprint-linux": "pass",
+              "fingerprint-rootfs": "pass",
+              "fingerprint-firmware-dmi": "pass"
+            },
+            "firmware-fingerprint-cold": {
+              "bl2": "pass",
+              "bl31": "pass",
+              "op_tee_version": "pass",
+              "u_boot": "pass"
+            }
+          }
+        },
+        "vq": {
+          "runs": [
+            {
+              "mode": "old",
+              "suite": "inference-old-1",
+              "id": 471081,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471081",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 29.81,
+                  "p50": 29.519,
+                  "p90": 29.714
+                },
+                "cpu-tflite": {
+                  "mean": 6.577,
+                  "p50": 6.369,
+                  "p90": 7.159
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 30.81,
+                  "p50": 30.812,
+                  "p90": 31.008
+                },
+                "npu0-qnn-htp": {
+                  "mean": 7.703,
+                  "p50": 8.604,
+                  "p90": 12.346
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 29
+              }
+            },
+            {
+              "mode": "new",
+              "suite": "inference-new-1",
+              "id": 471081,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471081",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 29.594,
+                  "p50": 29.577,
+                  "p90": 29.749
+                },
+                "cpu-tflite": {
+                  "mean": 6.725,
+                  "p50": 6.432,
+                  "p90": 7.463
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 30.872,
+                  "p50": 30.856,
+                  "p90": 31.002
+                },
+                "npu0-qnn-htp": {
+                  "mean": 0.404,
+                  "p50": 0.404,
+                  "p90": 0.408
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 29
+              }
+            },
+            {
+              "mode": "old",
+              "suite": "inference-old-2",
+              "id": 471081,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471081",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 29.565,
+                  "p50": 29.55,
+                  "p90": 29.668
+                },
+                "cpu-tflite": {
+                  "mean": 6.675,
+                  "p50": 6.388,
+                  "p90": 7.334
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 31.108,
+                  "p50": 31.087,
+                  "p90": 31.335
+                },
+                "npu0-qnn-htp": {
+                  "mean": 7.92,
+                  "p50": 7.837,
+                  "p90": 13.162
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 29
+              }
+            },
+            {
+              "mode": "new",
+              "suite": "inference-new-2",
+              "id": 471081,
+              "url": "https://lava.infra.foundries.io/scheduler/job/471081",
+              "measurements": {
+                "cpu-qnn": {
+                  "mean": 29.556,
+                  "p50": 29.553,
+                  "p90": 29.661
+                },
+                "cpu-tflite": {
+                  "mean": 6.685,
+                  "p50": 6.413,
+                  "p90": 7.435
+                },
+                "gpu-tflite-gpu": {
+                  "mean": 31.476,
+                  "p50": 31.059,
+                  "p90": 31.231
+                },
+                "npu0-qnn-htp": {
+                  "mean": 0.402,
+                  "p50": 0.402,
+                  "p90": 0.407
+                }
+              },
+              "failures": [],
+              "counts": {
+                "pass": 29
+              }
+            }
+          ],
+          "note": "Job 471081: original 33802ad7 and updated a5c05a15, alternated twice on one boot. Original NPU mode is asynchronous; updated NPU mode is synchronous.",
+          "validation": "7/7 firmware and live-image fingerprint checks pass; both test-script hashes match. All four normal inference suites pass correctness checks. Negative controls, wrong-class: 4 expected failures, gpu-down: 7 expected failures, htp-down: 9 expected failures; no unexpected failures. Poweroff confirmed in the job log.",
+          "negative": {
+            "wrong-class": {
+              "valid": true,
+              "expected_failures": [
+                "cpu-qnn-top1",
+                "cpu-tflite-top1",
+                "gpu-tflite-gpu-top1",
+                "npu0-qnn-htp-top1"
+              ],
+              "actual_failures": [
+                "cpu-qnn-top1",
+                "cpu-tflite-top1",
+                "gpu-tflite-gpu-top1",
+                "npu0-qnn-htp-top1"
+              ],
+              "counts": {
+                "fail": 4,
+                "pass": 25
+              }
+            },
+            "gpu-down": {
+              "valid": true,
+              "expected_failures": [
+                "gpu-tflite-gpu-latency",
+                "gpu-tflite-gpu-latency-p50",
+                "gpu-tflite-gpu-latency-p90",
+                "gpu-tflite-gpu-ready",
+                "gpu-tflite-gpu-run",
+                "gpu-tflite-gpu-top1",
+                "gpu-tflite-gpu-vs-cpu"
+              ],
+              "actual_failures": [
+                "gpu-tflite-gpu-latency",
+                "gpu-tflite-gpu-latency-p50",
+                "gpu-tflite-gpu-latency-p90",
+                "gpu-tflite-gpu-ready",
+                "gpu-tflite-gpu-run",
+                "gpu-tflite-gpu-top1",
+                "gpu-tflite-gpu-vs-cpu"
+              ],
+              "counts": {
+                "pass": 22,
+                "fail": 7
+              }
+            },
+            "htp-down": {
+              "valid": true,
+              "expected_failures": [
+                "npu0-qnn-htp-latency",
+                "npu0-qnn-htp-latency-p50",
+                "npu0-qnn-htp-latency-p90",
+                "npu0-qnn-htp-ready",
+                "npu0-qnn-htp-run",
+                "npu0-qnn-htp-speedup",
+                "npu0-qnn-htp-top1",
+                "npu0-qnn-htp-vs-cpu",
+                "npu0-qnn-htp-vs-host"
+              ],
+              "actual_failures": [
+                "npu0-qnn-htp-latency",
+                "npu0-qnn-htp-latency-p50",
+                "npu0-qnn-htp-latency-p90",
+                "npu0-qnn-htp-ready",
+                "npu0-qnn-htp-run",
+                "npu0-qnn-htp-speedup",
+                "npu0-qnn-htp-top1",
+                "npu0-qnn-htp-vs-cpu",
+                "npu0-qnn-htp-vs-host"
+              ],
+              "counts": {
+                "pass": 20,
+                "fail": 9
+              }
+            }
+          },
+          "fingerprints": {
+            "boot-fingerprint": {
+              "fingerprint-linux": "pass",
+              "fingerprint-rootfs": "pass",
+              "fingerprint-firmware-dmi": "pass"
+            },
+            "firmware-fingerprint-cold": {
+              "bl2": "pass",
+              "bl31": "pass",
+              "op_tee_version": "pass",
+              "u_boot": "pass"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sections": [
+    {
+      "id": "summary",
+      "title": "1. What changed",
+      "html": "<p>The October 2 SystemReady fixes are now folded into the integration stack: VENTUNO Q SCT is Compliant, UNO Q SCT has one remaining failure, and RB3 Gen 2 completes ACS. Lemans still encounters F16. The subsequent UNO Q investigation identifies and fixes the older CPU_ON defect; all BSA PE cases pass, with five timer/wake failures still open.</p><div class=\"tiles\"><div class=\"tile\"><div class=\"tname\">VENTUNO Q SCT</div><div class=\"big\">Compliant</div><p class=\"small\">Previously 20 Arm SCT failures. <a href=\"https://lava.infra.foundries.io/scheduler/job/471094\">471094</a></p></div><div class=\"tile\"><div class=\"tname\">UNO Q hotplug</div><div class=\"big\">1,400 cycles</div><p class=\"small\">Pass on each of two devices with the final fix. <a href=\"https://lava.infra.foundries.io/scheduler/job/471195\">471195</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471196\">471196</a></p></div><div class=\"tile\"><div class=\"tname\">VENTUNO Q NPU</div><div class=\"big\">0.40 ms</div><p class=\"small\">0.403 ms mean, synchronous NETRUN measurement. <a href=\"https://lava.infra.foundries.io/scheduler/job/471081\">471081</a></p></div><div class=\"tile\"><div class=\"tname\">Lemans restart repeat</div><div class=\"big\">95 / 95</div><p class=\"small\">PAS TEE backend fix; unrelated failures retained. <a href=\"https://lava.infra.foundries.io/scheduler/job/471182\">471182</a></p></div></div><p><b>New in this dated entry:</b> the folded SystemReady runs, standard-plan comparisons, UNO Q root cause and final validation, and LPASS/PAS TEE restart evidence. <b>Carried:</b> the October 4 integration baselines, existing open findings, and the October 5 INF-1 paired measurements already prepared in the prior local render. INF-1 is repeated here with the same values, not a new firmware speedup or another test run.</p><p>These are separate experiments on their recorded images, not a single combined image containing every fix. The <a href=\"../2026-10-04/index.html\">October 4 report</a> retains its full case inventory, components and older findings.</p>"
+    },
+    {
+      "id": "systemready",
+      "title": "2. SystemReady: Arm verdicts before and after",
+      "html": "<p><span class=\"tag info\">New</span> The RTC/time-service, Ethernet, interrupt-description, watchdog and UFS changes from October 2 are now included. The same ACS Linux image is used as the baseline. The tables below reproduce Arm verdicts from the report; they are not counts of parsed LAVA cases. Canceled RB3 and Lemans baselines have no completed Arm verdict. A Complete LAVA job does not establish Arm compliance.</p><div class=\"tw\"><table><thead><tr><th>Board</th><th>Baseline to folded run</th><th>SCT</th><th>BSA</th><th>Overall Arm verdict</th></tr></thead><tbody><tr><td>VENTUNO Q</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/470192\">470192</a> to <a href=\"https://lava.infra.foundries.io/scheduler/job/471094\">471094</a></td><td>Failed 20 to Compliant</td><td>Failed 4 to Failed 4</td><td>Not Compliant</td></tr><tr><td>UNO Q</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/469816\">469816</a> to <a href=\"https://lava.infra.foundries.io/scheduler/job/471088\">471088</a></td><td>Failed 20 to Failed 1</td><td>Failed 1 to Failed 14; later PE fix below</td><td>Not Compliant</td></tr><tr><td>RB3 Gen 2</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/469818\">469818</a> to <a href=\"https://lava.infra.foundries.io/scheduler/job/471091\">471091</a></td><td>No completed verdict to Failed 1</td><td>No completed verdict to Failed 3</td><td>No completed verdict to Not Compliant</td></tr><tr><td>Lemans EVK (IQ-9075)</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/469823\">469823</a> to <a href=\"https://lava.infra.foundries.io/scheduler/job/471093\">471093</a></td><td>No completed verdict to Failed 2</td><td>No completed verdict to Failed 2</td><td>No completed verdict to Not Compliant</td></tr></tbody></table></div><p>VENTUNO Q, UNO Q and RB3 Gen 2 finish Complete. Lemans produces a complete ACS archive but the LAVA job ends Incomplete at final Linux shutdown. Its F16 aborts remain failures despite recovery power cycles. Every board retains mandatory qualification gaps, including OS_TEST not run and Capsule Update failed.</p><details><summary>VENTUNO Q: all Arm suite verdicts before and after</summary><div class=\"tw\"><table><thead><tr><th>Suite</th><th>Requirement</th><th>Before <a href=\"https://lava.infra.foundries.io/scheduler/job/470192\">470192</a></th><th>After <a href=\"https://lava.infra.foundries.io/scheduler/job/471094\">471094</a></th></tr></thead><tbody><tr><td>PFDI</td><td>Conditional-Mandatory</td><td>Not Run</td><td>Not Run</td></tr><tr><td>BBSR-FWTS</td><td>Extension</td><td>Not Run</td><td>Not Run</td></tr><tr><td>BBSR-SCT</td><td>Extension</td><td>Not Run</td><td>Not Run</td></tr><tr><td>BBSR-TPM</td><td>Extension</td><td>Not Run</td><td>Not Run</td></tr><tr><td>SCMI</td><td>Extension</td><td>Not Run</td><td>Not Run</td></tr><tr><td>Capsule Update</td><td>Mandatory</td><td>Not Compliant: Failed 1</td><td>Not Compliant: Failed 1</td></tr><tr><td>DT_VALIDATE</td><td>Mandatory</td><td>Compliant</td><td>Compliant</td></tr><tr><td>ETHTOOL_TEST</td><td>Mandatory</td><td>Not Compliant: Failed 2</td><td>Not Compliant: Failed 2</td></tr><tr><td>FWTS</td><td>Mandatory</td><td>Compliant</td><td>Compliant</td></tr><tr><td>OS_TEST</td><td>Mandatory</td><td>Not Compliant: not run</td><td>Not Compliant: not run</td></tr><tr><td>READ_WRITE_CHECK_BLK_DEVICES</td><td>Mandatory</td><td>Compliant</td><td>Compliant</td></tr><tr><td>SCT</td><td>Mandatory</td><td>Not Compliant: Failed 20</td><td>Compliant</td></tr><tr><td>BSA</td><td>Recommended</td><td>Not Compliant: Failed 4</td><td>Not Compliant: Failed 4</td></tr><tr><td>DT_KSELFTEST</td><td>Recommended</td><td>Not Compliant: Failed 45</td><td>Not Compliant: Failed 45</td></tr><tr><td>NETWORK_BOOT</td><td>Recommended</td><td>Not Compliant: Failed 1</td><td>Not Compliant: Failed 1</td></tr><tr><td>POST_SCRIPT</td><td>Recommended</td><td>Not Compliant: Failed 2</td><td>Not Compliant: Failed 2</td></tr><tr><td>PSCI</td><td>Recommended</td><td>Compliant</td><td>Compliant</td></tr><tr><td>RUNTIME_DEV_MAP</td><td>Recommended</td><td>Compliant</td><td>Compliant</td></tr><tr><td>SMBIOS</td><td>Recommended</td><td>Compliant</td><td>Compliant</td></tr><tr><td>Overall</td><td></td><td>Not Compliant : Mandatory - (not run: OS_TEST; failed: ETHTOOL_TEST, SCT, Capsule Update) : Recommended - (failed: BSA, NETWORK_BOOT, DT_KSELFTEST, POST_SCRIPT)</td><td>Not Compliant : Mandatory - (not run: OS_TEST; failed: ETHTOOL_TEST, Capsule Update) : Recommended - (failed: DT_KSELFTEST, POST_SCRIPT, NETWORK_BOOT, BSA)</td></tr></tbody></table></div></details><details><summary>UNO Q: all Arm suite verdicts before and after</summary><div class=\"tw\"><table><thead><tr><th>Suite</th><th>Requirement</th><th>Before <a href=\"https://lava.infra.foundries.io/scheduler/job/469816\">469816</a></th><th>After <a href=\"https://lava.infra.foundries.io/scheduler/job/471088\">471088</a></th></tr></thead><tbody><tr><td>PFDI</td><td>Conditional-Mandatory</td><td>Not Run</td><td>Not Run</td></tr><tr><td>BBSR-FWTS</td><td>Extension</td><td>Not Run</td><td>Not Run</td></tr><tr><td>BBSR-SCT</td><td>Extension</td><td>Not Run</td><td>Not Run</td></tr><tr><td>BBSR-TPM</td><td>Extension</td><td>Not Run</td><td>Not Run</td></tr><tr><td>SCMI</td><td>Extension</td><td>Not Run</td><td>Not Run</td></tr><tr><td>Capsule Update</td><td>Mandatory</td><td>Not Compliant: Failed 1</td><td>Not Compliant: Failed 1</td></tr><tr><td>DT_VALIDATE</td><td>Mandatory</td><td>Compliant</td><td>Compliant</td></tr><tr><td>ETHTOOL_TEST</td><td>Mandatory</td><td>Compliant</td><td>Compliant</td></tr><tr><td>FWTS</td><td>Mandatory</td><td>Compliant</td><td>Compliant</td></tr><tr><td>OS_TEST</td><td>Mandatory</td><td>Not Compliant: not run</td><td>Not Compliant: not run</td></tr><tr><td>READ_WRITE_CHECK_BLK_DEVICES</td><td>Mandatory</td><td>Compliant</td><td>Not Compliant: Failed 2</td></tr><tr><td>SCT</td><td>Mandatory</td><td>Not Compliant: Failed 20</td><td>Not Compliant: Failed 1</td></tr><tr><td>BSA</td><td>Recommended</td><td>Not Compliant: Failed 1</td><td>Not Compliant: Failed 14</td></tr><tr><td>DT_KSELFTEST</td><td>Recommended</td><td>Not Compliant: Failed 35</td><td>Not Compliant: Failed 34</td></tr><tr><td>NETWORK_BOOT</td><td>Recommended</td><td>Not Compliant: Failed 1</td><td>Not Compliant: Failed 1</td></tr><tr><td>POST_SCRIPT</td><td>Recommended</td><td>Not Compliant: Failed 2</td><td>Not Compliant: Failed 2</td></tr><tr><td>PSCI</td><td>Recommended</td><td>Compliant</td><td>Compliant</td></tr><tr><td>RUNTIME_DEV_MAP</td><td>Recommended</td><td>Not Compliant: Failed 1</td><td>Not Compliant: Failed 1</td></tr><tr><td>SMBIOS</td><td>Recommended</td><td>Compliant</td><td>Compliant</td></tr><tr><td>Overall</td><td></td><td>Not Compliant : Mandatory - (not run: OS_TEST; failed: SCT, Capsule Update) : Recommended - (failed: DT_KSELFTEST, RUNTIME_DEV_MAP, BSA, NETWORK_BOOT, POST_SCRIPT)</td><td>Not Compliant : Mandatory - (not run: OS_TEST; failed: SCT, Capsule Update, READ_WRITE_CHECK_BLK_DEVICES) : Recommended - (failed: BSA, DT_KSELFTEST, POST_SCRIPT, NETWORK_BOOT, RUNTIME_DEV_MAP)</td></tr></tbody></table></div></details><details><summary>RB3 Gen 2: all Arm suite verdicts before and after</summary><div class=\"tw\"><table><thead><tr><th>Suite</th><th>Requirement</th><th>Before <a href=\"https://lava.infra.foundries.io/scheduler/job/469818\">469818</a></th><th>After <a href=\"https://lava.infra.foundries.io/scheduler/job/471091\">471091</a></th></tr></thead><tbody><tr><td>PFDI</td><td>Conditional-Mandatory</td><td>No completed verdict (canceled)</td><td>Not Run</td></tr><tr><td>BBSR-FWTS</td><td>Extension</td><td>No completed verdict (canceled)</td><td>Not Run</td></tr><tr><td>BBSR-SCT</td><td>Extension</td><td>No completed verdict (canceled)</td><td>Not Run</td></tr><tr><td>BBSR-TPM</td><td>Extension</td><td>No completed verdict (canceled)</td><td>Not Run</td></tr><tr><td>SCMI</td><td>Extension</td><td>No completed verdict (canceled)</td><td>Not Run</td></tr><tr><td>Capsule Update</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 1</td></tr><tr><td>DT_VALIDATE</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 3</td></tr><tr><td>ETHTOOL_TEST</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Compliant</td></tr><tr><td>FWTS</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Compliant</td></tr><tr><td>OS_TEST</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Not Compliant: not run</td></tr><tr><td>READ_WRITE_CHECK_BLK_DEVICES</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Compliant</td></tr><tr><td>SCT</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 1</td></tr><tr><td>BSA</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 3</td></tr><tr><td>DT_KSELFTEST</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 37</td></tr><tr><td>NETWORK_BOOT</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 1</td></tr><tr><td>POST_SCRIPT</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 3</td></tr><tr><td>PSCI</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Compliant</td></tr><tr><td>RUNTIME_DEV_MAP</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Compliant</td></tr><tr><td>SMBIOS</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Compliant</td></tr><tr><td>Overall</td><td></td><td>No completed verdict (canceled)</td><td>Not Compliant : Mandatory - (not run: OS_TEST; failed: SCT, DT_VALIDATE, Capsule Update) : Recommended - (failed: BSA, DT_KSELFTEST, NETWORK_BOOT, POST_SCRIPT)</td></tr></tbody></table></div></details><details><summary>Lemans EVK: all Arm suite verdicts before and after</summary><div class=\"tw\"><table><thead><tr><th>Suite</th><th>Requirement</th><th>Before <a href=\"https://lava.infra.foundries.io/scheduler/job/469823\">469823</a></th><th>After <a href=\"https://lava.infra.foundries.io/scheduler/job/471093\">471093</a></th></tr></thead><tbody><tr><td>PFDI</td><td>Conditional-Mandatory</td><td>No completed verdict (canceled)</td><td>Not Run</td></tr><tr><td>BBSR-FWTS</td><td>Extension</td><td>No completed verdict (canceled)</td><td>Not Run</td></tr><tr><td>BBSR-SCT</td><td>Extension</td><td>No completed verdict (canceled)</td><td>Not Run</td></tr><tr><td>BBSR-TPM</td><td>Extension</td><td>No completed verdict (canceled)</td><td>Not Run</td></tr><tr><td>SCMI</td><td>Extension</td><td>No completed verdict (canceled)</td><td>Not Run</td></tr><tr><td>Capsule Update</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 1</td></tr><tr><td>DT_VALIDATE</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 5</td></tr><tr><td>ETHTOOL_TEST</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 2</td></tr><tr><td>FWTS</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Compliant</td></tr><tr><td>OS_TEST</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Not Compliant: not run</td></tr><tr><td>READ_WRITE_CHECK_BLK_DEVICES</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 4</td></tr><tr><td>SCT</td><td>Mandatory</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 2</td></tr><tr><td>BSA</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 2</td></tr><tr><td>DT_KSELFTEST</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 64</td></tr><tr><td>NETWORK_BOOT</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 1</td></tr><tr><td>POST_SCRIPT</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Not Compliant: Failed 3</td></tr><tr><td>PSCI</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Compliant</td></tr><tr><td>RUNTIME_DEV_MAP</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Compliant</td></tr><tr><td>SMBIOS</td><td>Recommended</td><td>No completed verdict (canceled)</td><td>Compliant</td></tr><tr><td>Overall</td><td></td><td>No completed verdict (canceled)</td><td>Not Compliant : Mandatory - (not run: OS_TEST; failed: DT_VALIDATE, READ_WRITE_CHECK_BLK_DEVICES, Capsule Update, SCT, ETHTOOL_TEST) : Recommended - (failed: DT_KSELFTEST, BSA, NETWORK_BOOT, POST_SCRIPT)</td></tr></tbody></table></div></details><p><b>UNO Q interpretation updated:</b> the folded run has nine BSA PE failures after CPU 2 stops completing CPU_ON. The later crossover tests show the defect already exists in the baseline and is device-sensitive. The original before/after comparison changed devices as well as software. The <a href=\"#cpuon\">CPU_ON fix</a> restores the PE cases; it is a separate follow-up, not a rewrite of the Arm verdict recorded for <a href=\"https://lava.infra.foundries.io/scheduler/job/471088\">471088</a>.</p><p>UNO Q retains one SCT failure for unsupported EFI network capability. Its two changed boot-partition read failures, and the four Lemans read failures, match the prior rescan race (SystemReady F15), but missing individual read errors limit that attribution to an inference. VENTUNO Q BSA stays at four failures because B_PPI_00 is repaired while B_TIME_09 becomes a failure. RB3 B_TIME_09 is skipped at the documented standby limit. <a href=\"https://lava.infra.foundries.io/scheduler/job/471088\">471088</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471093\">471093</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471094\">471094</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471091\">471091</a></p><p><b>Open:</b> Lemans F16 still aborts twice. The first fault reaches SCT data; the cause of the control-flow error is unisolated, and the second fault does not establish the same mechanism. All 27 LAVA power-cycle interventions are test recovery, not successful firmware resets; final Linux shutdown also times out. <a href=\"https://lava.infra.foundries.io/scheduler/job/471093\">471093</a> The rare VENTUNO Q XBL hang after <code>media_init:2</code> remains open: absence in the folded run is not proof of a fix, and the SAIL timeout also occurs on successful boots. <a href=\"https://lava.infra.foundries.io/scheduler/job/469812\">469812</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/470192\">470192</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471094\">471094</a></p><p><b>Carried workarounds:</b> random MAC fallbacks on VENTUNO Q and Lemans retain the tested Ethernet behavior. They do not establish persistent VENTUNO Q addressing or repair Lemans EEPROM/QUP probe ordering. No F16 fix or rare-XBL-hang fix is established by this change set.</p>"
+    },
+    {
+      "id": "standard",
+      "title": "3. Standard-plan comparisons",
+      "html": "<p><span class=\"tag info\">New</span> These are the unchanged standard plans on the folded SR images. Totals are pass / fail / skip as recorded in the source report, including LAVA infrastructure. The historical index charts use application-suite totals, so this focused update is not added as a comparable trend point. INF-1 is excluded from these SR test definitions.</p><div class=\"tw\"><table><thead><tr><th>Board</th><th>New job</th><th>Pass / fail / skip</th><th>Named baselines</th><th>Non-LAVA case comparison</th><th>Fingerprints</th></tr></thead><tbody><tr><td>VENTUNO Q</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471106\">471106</a>, Complete</td><td>350 / 2 / 15</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/470155\">470155</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/470156\">470156</a> (BL2)</td><td>All 289 present; warm warning/trace become fail, prior FastRPC/HTP failures pass</td><td>14/14 pass</td></tr><tr><td>UNO Q</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471107\">471107</a>, Complete</td><td>266 / 0 / 12</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/469793\">469793</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/469794\">469794</a></td><td>All 209 present and unchanged against both</td><td>14/14 pass</td></tr><tr><td>RB3 Gen 2</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471104\">471104</a>, Complete</td><td>351 / 8 / 17</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/470148\">470148</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/470149\">470149</a></td><td>All 298 present; frequency minimum passes, PMU variation stays within baseline pair</td><td>14/14 pass</td></tr><tr><td>Lemans EVK</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471105\">471105</a>, Incomplete</td><td>400 / 21 / 16</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/469795\">469795</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/469796\">469796</a></td><td>All 362 present; only two unsigned-PD checks change, pass to fail</td><td>Cold 7/7 pass; warm banners absent</td></tr><tr><td>VENTUNO Q repeat</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471109\">471109</a>, Complete</td><td>350 / 2 / 15</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/470155\">470155</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/470156\">470156</a></td><td>All 289 present; GPU correctness becomes fail, warm health passes</td><td>14/14 pass</td></tr><tr><td>Lemans EVK repeat</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471110\">471110</a>, Incomplete</td><td>400 / 21 / 16</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/469795\">469795</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/469796\">469796</a></td><td>All 362 present; identical results to 471105</td><td>Cold 7/7 pass; warm banners absent</td></tr></tbody></table></div><p>VENTUNO Q retains both failed boots: <a href=\"https://lava.infra.foundries.io/scheduler/job/471106\">471106</a> has the known display vblank warning/trace (F3), while <a href=\"https://lava.infra.foundries.io/scheduler/job/471109\">471109</a> has the known GMU timeout and incorrect GPU output (F20). Neither new boot passes every case; combining coverage across them is not a clean run.</p><p>UNO Q has no changed standard cases. RB3 Gen 2 stays within the baseline PMU variation; the frequency-minimum check passes once, which does not establish a fix. Lemans reproduces both unsigned-PD session failures (F18) and the warm-reset timeout in both runs; its warm firmware banners are absent. No new failure signature is identified, but changed failures remain visible and these results do not establish regression-free integration. <a href=\"https://lava.infra.foundries.io/scheduler/job/471107\">471107</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471104\">471104</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471105\">471105</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471110\">471110</a></p>"
+    },
+    {
+      "id": "cpuon",
+      "title": "4. UNO Q CPU_ON hotplug fix",
+      "html": "<p><span class=\"tag good\">Fixed locally</span> Agatti CPU_OFF leaves the core powered in WFI. The old CPU_ON path nevertheless repeats the cold power-up sequence, changing memory-power and retention controls on a core whose supply never collapsed. The fix detects an already-powered core, preserves those controls and pulses only core reset. First cold power-up is unchanged. The exact internal stall instruction, individual offending power bit and electrical reason for device susceptibility remain unobserved.</p><p>Crossover tests show baseline and SR both fail on Device A and both pass on Device B. A rebuilt unmodified image, a data-layout-only control and a read-only control still fail on Device A; the uninstrumented reset change passes. Tracing masks the failure and is not the fix. <a href=\"https://lava.infra.foundries.io/scheduler/job/471177\">471177</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471176\">471176</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471179\">471179</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471180\">471180</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471185\">471185</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471193\">471193</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471216\">471216</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471190\">471190</a></p><div class=\"tw\"><table><thead><tr><th>Final validation</th><th>Device A</th><th>Device B</th></tr></thead><tbody><tr><td>Hotplug</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471195\">471195</a>: 1,400 cycles pass</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471196\">471196</a>: 1,400 cycles pass</td></tr><tr><td>BSA</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471207\">471207</a>: all PE cases pass; 5 timer/wake failures</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471189\">471189</a>: unmodified SR crossover, all PE pass; not a final-fixed-firmware BSA run</td></tr><tr><td>Unchanged standard plan</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471208\">471208</a>: 266 / 0 / 12</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471197\">471197</a>: 266 / 0 / 12</td></tr></tbody></table></div><p>Final BSA runs all 64 rules: 21 pass (including one partial), five fail and 38 skip/not implemented. The remaining failures are <code>B_TIME_07</code>, <code>B_TIME_08</code>, <code>B_TIME_09</code>, <code>B_WAK_03</code> and <code>B_WAK_07</code>. The earlier investigation attributes these to timer compare width and ACS timer-frame address translation; this CPU_ON work does not re-isolate or fix them. This is BSA-only validation, not a new full ACS verdict. <a href=\"https://lava.infra.foundries.io/scheduler/job/471207\">471207</a></p><p>Both final standard jobs preserve all 209 non-LAVA case identities and results from <a href=\"https://lava.infra.foundries.io/scheduler/job/471107\">471107</a>, with no changed, added or missing cases. Their 266 / 0 / 12 totals include LAVA infrastructure. Cold/warm fingerprints pass in both final standard jobs. The nine PE failures are fixed; a total of one BSA failure is not achieved. <a href=\"https://lava.infra.foundries.io/scheduler/job/471197\">471197</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471208\">471208</a></p>"
+    },
+    {
+      "id": "perf",
+      "title": "5. Synchronous inference on every processing unit",
+      "html": "<p><span class=\"tag info\">Carried INF-1 measurements, October 5</span> These paired values are unchanged from the prepared local render. VENTUNO Q NPU is <b>0.403 ms, approximately 0.40 ms</b>. Only the HTP invocation adds <code>--synchronous</code>; CPU/GPU commands and all firmware images are unchanged. Original VENTUNO Q NPU time includes async queue wait. This corrects measurement semantics, not firmware performance.</p><p>Mean latency in milliseconds; each cell averages the two per-run means. Old and new measurements share the linked boot. Displayed values use the source report's rounding.</p><div class=\"tw\"><table><thead><tr><th>Board</th><th>PU/runtime</th><th>Original</th><th>Updated</th><th>Job</th></tr></thead><tbody><tr><td>VENTUNO Q</td><td>CPU, QNN fp32</td><td>29.688</td><td>29.575</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471081\">471081</a></td></tr><tr><td>VENTUNO Q</td><td>CPU, TFLite XNNPACK</td><td>6.626</td><td>6.705</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471081\">471081</a></td></tr><tr><td>VENTUNO Q</td><td>GPU, TFLite fp16</td><td>30.959</td><td>31.174</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471081\">471081</a></td></tr><tr><td>VENTUNO Q</td><td>NPU0, QNN HTP int8 (old async with queue wait)</td><td>7.812</td><td>0.403</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471081\">471081</a></td></tr><tr><td>Lemans EVK (IQ-9075)</td><td>CPU, QNN fp32</td><td>31.798</td><td>26.534</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471043\">471043</a></td></tr><tr><td>Lemans EVK (IQ-9075)</td><td>CPU, TFLite XNNPACK</td><td>11.596</td><td>11.616</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471043\">471043</a></td></tr><tr><td>Lemans EVK (IQ-9075)</td><td>GPU, TFLite fp16</td><td>11.100</td><td>11.515</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471043\">471043</a></td></tr><tr><td>Lemans EVK (IQ-9075)</td><td>NPU0, QNN HTP int8</td><td>1.693</td><td>1.736</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471043\">471043</a></td></tr><tr><td>Lemans EVK (IQ-9075)</td><td>NPU1, QNN HTP int8</td><td>1.692</td><td>1.692</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471043\">471043</a></td></tr><tr><td>RB3 Gen 2</td><td>CPU, QNN fp32</td><td>25.122</td><td>25.028</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471042\">471042</a></td></tr><tr><td>RB3 Gen 2</td><td>CPU, TFLite XNNPACK</td><td>9.444</td><td>9.470</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471042\">471042</a></td></tr><tr><td>RB3 Gen 2</td><td>GPU, TFLite fp16</td><td>26.846</td><td>24.966</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471042\">471042</a></td></tr><tr><td>RB3 Gen 2</td><td>NPU0, QNN HTP int8</td><td>0.691</td><td>0.686</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471042\">471042</a></td></tr><tr><td>UNO Q</td><td>CPU, TFLite XNNPACK</td><td>33.660</td><td>33.622</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471044\">471044</a></td></tr><tr><td>UNO Q</td><td>GPU, TFLite fp16</td><td>330.582</td><td>330.867</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471044\">471044</a></td></tr><tr><td>UNO Q</td><td>NPU</td><td>absent</td><td>absent</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471044\">471044</a></td></tr><tr><td>UNO Q</td><td>CPU, QNN</td><td>unsupported by QAIRT</td><td>unsupported by QAIRT</td><td><a href=\"https://lava.infra.foundries.io/scheduler/job/471044\">471044</a></td></tr></tbody></table></div><p>The first VENTUNO Q attempt <a href=\"https://lava.infra.foundries.io/scheduler/job/471041\">471041</a> retains its F20 GPU correctness failure. The table uses the passing repeat <a href=\"https://lava.infra.foundries.io/scheduler/job/471081\">471081</a>. Timing differences in unchanged CPU/GPU paths have no isolated cause in this experiment. The following plots and expandable measurements reuse the prior render's exact data.</p>",
+      "render": "inf1"
+    },
+    {
+      "id": "remoteproc",
+      "title": "6. Remoteproc restart fixes",
+      "html": "<h3>LPASS AG NoC sideband flag</h3><p><span class=\"tag info\">New A/B evidence</span> The Lemans OP-TEE change clears the AG NoC sideband manager port 1 output flag after releasing the LPASS halt request. Both the baseline <a href=\"https://lava.infra.foundries.io/scheduler/job/471002\">471002</a> and patched <a href=\"https://lava.infra.foundries.io/scheduler/job/471003\">471003</a> pass the restart matrix. Each DSP has three stop/start cycles: 18 step checks plus a presence check. These are 19 test cases per DSP, not 19 restart cycles.</p><div class=\"tw\"><table><thead><tr><th>DSP</th><th>Baseline <a href=\"https://lava.infra.foundries.io/scheduler/job/471002\">471002</a></th><th>Patched <a href=\"https://lava.infra.foundries.io/scheduler/job/471003\">471003</a></th></tr></thead><tbody><tr><td>ADSP</td><td>19 / 19 pass</td><td>19 / 19 pass</td></tr><tr><td>CDSP</td><td>19 / 19 pass</td><td>19 / 19 pass</td></tr><tr><td>CDSP1</td><td>19 / 19 pass</td><td>19 / 19 pass</td></tr><tr><td>GPDSP0</td><td>19 / 19 pass</td><td>19 / 19 pass</td></tr><tr><td>GPDSP1</td><td>19 / 19 pass</td><td>19 / 19 pass</td></tr></tbody></table></div><p>Both jobs pass all seven runtime fingerprint checks and poweroff. Both retain the deliberate missing-device negative and kernel warning/call-trace failures. The patched job also fails CDSP/CDSP1 boot smoke checks, matching the existing F15 boot-crash finding; measured restart cases still pass. A/B validates the added reset writes without showing a restart improvement, since the baseline also passes. The build-only report predates these runtime results.</p><h3>PAS TEE NULL resource table</h3><p><span class=\"tag good\">Fixed in the Linux TEE backend</span> Stopping a remote processor clears the cached table pointer but can leave a nonzero size. If restart has no input resource table, the TEE backend uses that stale size and copies from NULL. The fix normalizes NULL input to zero size before both the TEE size query and the copy. Real input tables remain unchanged; the generic remoteproc caller is unchanged.</p><p>The failing control <a href=\"https://lava.infra.foundries.io/scheduler/job/467335\">467335</a> faults at <code>qcom_pas_tee_get_rsc_table()</code> on first restart. The earlier caller-fix reference <a href=\"https://lava.infra.foundries.io/scheduler/job/467339\">467339</a> passes the restart matrix. The new backend-fix jobs below test the replacement fix; a regression harness also reproduces the original fault and passes all 15 fixed cases, including failure paths.</p><div class=\"tw\"><table><thead><tr><th>Board / job</th><th>Restart cases pass / fail</th><th>All cases pass / fail</th><th>Qualification</th></tr></thead><tbody><tr><td>VENTUNO Q <a href=\"https://lava.infra.foundries.io/scheduler/job/471170\">471170</a></td><td>57 / 0</td><td>109 / 1</td><td>All three DSPs restart; sole failure is the deliberate negative.</td></tr><tr><td>Lemans <a href=\"https://lava.infra.foundries.io/scheduler/job/471178\">471178</a></td><td>94 / 1</td><td>145 / 6</td><td>All 15 functional cycles pass; a concurrent FastRPC release oops fails a kernel-clean case. Failed matrix retained.</td></tr><tr><td>Lemans unchanged repeat <a href=\"https://lava.infra.foundries.io/scheduler/job/471182\">471182</a></td><td>95 / 0</td><td>147 / 4</td><td>All five DSPs restart; remaining failures match the caller-fix reference.</td></tr></tbody></table></div><p>All-case totals include LAVA infrastructure; restart counts include one presence case per DSP. The four remaining Lemans-repeat failures are CDSP1 boot smoke (F15), kernel warning/call-trace at boot (F4), and the deliberate missing-device negative. The first run's FastRPC release oops is a different trace from the PAS NULL-copy failure and remains unresolved. All three jobs pass firmware/kernel/rootfs fingerprints and final poweroff. This is restart validation, not a full platform regression suite. <a href=\"https://lava.infra.foundries.io/scheduler/job/471170\">471170</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471178\">471178</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471182\">471182</a></p>"
+    },
+    {
+      "id": "findings",
+      "title": "7. Unusual findings, flagged for investigation",
+      "html": "<p>Status is scoped to the cited experiment. Finding IDs come from their respective test reports; SystemReady and standard-plan numbering are not interchangeable. The <a href=\"../2026-10-04/index.html#findings\">earlier flagged findings</a> and <a href=\"../2026-10-04/index.html#known\">known-issue inventory</a> remain carried unless explicitly updated here; this follow-up does not rerun all historical maxcpus, negative-control or boot-timing experiments.</p>",
+      "render": "findings"
+    }
+  ],
+  "findings": [
+    {
+      "title": "UNO Q CPU_ON: cause identified and fixed",
+      "ids": [
+        "CPU_ON"
+      ],
+      "text": "New evidence supersedes the earlier SR-only attribution. The defect predates the SR fold and is device-sensitive. The powered-core reset change restores hotplug and all BSA PE cases; the complete BSA suite still has five failures.",
+      "evidence": "<a href=\"https://lava.infra.foundries.io/scheduler/job/471195\">471195</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471196\">471196</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471207\">471207</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471208\">471208</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471197\">471197</a>",
+      "class": "fixed"
+    },
+    {
+      "title": "UNO Q timer/wake failures remain open",
+      "ids": [
+        "BSA"
+      ],
+      "text": "Carried timer/wake findings remain after the CPU fix: B_TIME_07, B_TIME_08, B_TIME_09, B_WAK_03 and B_WAK_07. Neither BSA compliance nor full SystemReady compliance follows from the PE fix.",
+      "evidence": "<a href=\"https://lava.infra.foundries.io/scheduler/job/471207\">471207</a>",
+      "class": "known"
+    },
+    {
+      "title": "Lemans SCT aborts and reset recovery remain open",
+      "ids": [
+        "SystemReady F16"
+      ],
+      "text": "New folded run reproduces both SCT aborts. No established F16 fix is present. Power-cycle recovery does not turn failed reset or SCT cases into passes; final Linux shutdown also times out.",
+      "evidence": "<a href=\"https://lava.infra.foundries.io/scheduler/job/471093\">471093</a>",
+      "class": "known"
+    },
+    {
+      "title": "Rare VENTUNO Q XBL reset hang remains open",
+      "ids": [
+        "VQ-HANG"
+      ],
+      "text": "Carried hang after media_init:2; not reproduced in the folded run. The SAIL timeout alone is not diagnostic because successful boots print it too. No isolated cause or established fix.",
+      "evidence": "<a href=\"https://lava.infra.foundries.io/scheduler/job/469812\">469812</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/470192\">470192</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471094\">471094</a>",
+      "class": "known"
+    },
+    {
+      "title": "VENTUNO Q display and GPU correctness failures recur",
+      "ids": [
+        "F3",
+        "F20"
+      ],
+      "text": "New standard runs reproduce the known display vblank warning and the GMU timeout with incorrect GPU results on separate boots. Both failures are retained. Passing latency checks do not establish correct inference.",
+      "evidence": "<a href=\"https://lava.infra.foundries.io/scheduler/job/471106\">471106</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471109\">471109</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471041\">471041</a>",
+      "class": "known"
+    },
+    {
+      "title": "Lemans unsigned-PD and warm-reset failures recur",
+      "ids": [
+        "F18",
+        "F11"
+      ],
+      "text": "Both new standard runs reproduce the unsigned-PD session errors and absent warm-boot banners. These are changed failures against the named baselines where applicable, not clean standard-plan passes.",
+      "evidence": "<a href=\"https://lava.infra.foundries.io/scheduler/job/471105\">471105</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471110\">471110</a>",
+      "class": "known"
+    },
+    {
+      "title": "RB3 frequency readback passes once; PMU variation remains",
+      "ids": [
+        "F8",
+        "F1"
+      ],
+      "text": "New observation updates the earlier description of an always-failing minimum-frequency check. This one passing result establishes no fix; PMU failures remain within the baseline pair.",
+      "evidence": "<a href=\"https://lava.infra.foundries.io/scheduler/job/471104\">471104</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/470148\">470148</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/470149\">470149</a>",
+      "class": "info"
+    },
+    {
+      "title": "INF-1 measures synchronous per-inference latency",
+      "ids": [
+        "INF-1"
+      ],
+      "text": "Carried October 5 measurement correction: VENTUNO Q changes from 7.812 ms including async queue wait to 0.403 ms synchronous NETRUN time. Firmware and CPU/GPU commands are unchanged. UNO Q has no NPU and its QNN CPU backend remains unsupported by QAIRT.",
+      "evidence": "<a href=\"https://lava.infra.foundries.io/scheduler/job/471081\">471081</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471042\">471042</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471043\">471043</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471044\">471044</a>",
+      "class": "fixed"
+    },
+    {
+      "title": "LPASS A/B passes restart cases; boot faults remain",
+      "ids": [
+        "LPASS"
+      ],
+      "text": "Both sides pass all restart cases, so no measured restart improvement is claimed. The patched boot has additional CDSP/CDSP1 smoke failures. Both retain kernel warning/trace failures and the expected negative.",
+      "evidence": "<a href=\"https://lava.infra.foundries.io/scheduler/job/471002\">471002</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471003\">471003</a>",
+      "class": "info"
+    },
+    {
+      "title": "PAS fix validated with a failed FastRPC run retained",
+      "ids": [
+        "PAS TEE",
+        "F15",
+        "F4"
+      ],
+      "text": "The backend NULL-copy fix passes VENTUNO Q and the Lemans repeat. The first Lemans matrix fails a kernel-clean check during a concurrent FastRPC release oops. Its exact race was not re-diagnosed; boot smoke and idle warnings remain separate carried findings.",
+      "evidence": "<a href=\"https://lava.infra.foundries.io/scheduler/job/471170\">471170</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471178\">471178</a>, <a href=\"https://lava.infra.foundries.io/scheduler/job/471182\">471182</a>",
+      "class": "known"
+    }
+  ]
+}
